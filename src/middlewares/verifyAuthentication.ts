@@ -7,13 +7,13 @@ export default function verifyAuthentication(
   res: Response,
   next: NextFunction
 ) {
-  const token = req.headers.authorization?.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ message: 'Token não fornecido' });
-  }
-
   try {
+    const token = req.headers.authorization?.split(' ')[1];
+
+    if (!token) {
+      return res.status(401).json({ message: 'Token não fornecido' });
+    }
+
     if (!process.env.JWT_SECRET) {
       return res.status(500).json({ message: 'JWT secret is not defined' });
     }
@@ -21,11 +21,9 @@ export default function verifyAuthentication(
       token,
       process.env.JWT_SECRET
     ) as unknown as TokenPayload;
-    if (decoded.profile !== 'ADMIN') {
-      return res
-        .status(401)
-        .json({ message: 'Acesso não autorizado, você não é um ADMIN' });
-    }
+
+    console.log(decoded);
+
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Token Invalido' });

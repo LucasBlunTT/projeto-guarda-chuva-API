@@ -6,6 +6,7 @@ class UserService {
   async getAll() {
     return await AppDataSource.getRepository(User).find({
       where: { status: true },
+      order: { id: 'ASC' },
     });
   }
 
