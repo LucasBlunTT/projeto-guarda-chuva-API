@@ -13,6 +13,24 @@ export default class UserController {
     }
   }
 
+  async getById(req: Request, res: Response): Promise<void> {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const user = await UserService.getById(id);
+
+      if (!user) {
+        res.status(404).json({ message: 'Usuario não encontrado' });
+        return;
+      }
+
+      res.status(200).json(user);
+    } catch (error: any) {
+      res
+        .status(500)
+        .json({ message: 'Erro ao buscar usuario', error: error.message });
+    }
+  }
+
   async create(req: Request, res: Response): Promise<void> {
     try {
       const { name, profile, email, password } = req.body;

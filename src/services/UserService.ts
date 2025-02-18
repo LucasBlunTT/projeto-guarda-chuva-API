@@ -8,6 +8,13 @@ class UserService {
       where: { status: true },
     });
   }
+
+  async getById(id: number) {
+    return await AppDataSource.getRepository(User).findOne({
+      where: { id, status: true },
+    });
+  }
+
   async create(data: any) {
     const { name, profile, email, password } = data;
 
