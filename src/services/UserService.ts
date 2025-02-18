@@ -3,7 +3,11 @@ import User from '../entities/User';
 import bcrypt from 'bcrypt';
 
 class UserService {
-
+  async getAll() {
+    return await AppDataSource.getRepository(User).find({
+      where: { status: true },
+    });
+  }
   async create(data: any) {
     const { name, profile, email, password } = data;
 

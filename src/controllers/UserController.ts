@@ -2,7 +2,16 @@ import { Request, Response } from 'express';
 import UserService from '../services/UserService';
 
 export default class UserController {
-
+  async getAll(req: Request, res: Response): Promise<void> {
+    try {
+      const users = await UserService.getAll();
+      res.status(200).json(users);
+    } catch (error: any) {
+      res
+        .status(500)
+        .json({ message: 'Erro ao buscar usuarios', error: error.message });
+    }
+  }
 
   async create(req: Request, res: Response): Promise<void> {
     try {
