@@ -31,6 +31,20 @@ class UserService {
 
     return await AppDataSource.getRepository(User).save(user);
   }
+
+  async update(id: number, body: any) {
+    const userRepository = AppDataSource.getRepository(User);
+    const user = await userRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new Error('Usuario não encontrado');
+    }
+
+    Object.assign(user, body);
+    user.updated_at = new Date();
+
+    return await userRepository.save(user);
+  }
 }
 
 export default new UserService();

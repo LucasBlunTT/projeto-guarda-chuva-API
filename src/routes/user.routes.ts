@@ -8,5 +8,6 @@ const userRoutes = Router();
 userRoutes.get('/', verifyAuthentication, userController.getAll);
 userRoutes.get('/:id', verifyAuthentication, userController.getById);
 userRoutes.post('/', verifyAuthentication, userController.create);
+userRoutes.put('/:id', verifyAuthentication, userController.update);
 
 export default userRoutes;

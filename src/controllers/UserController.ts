@@ -48,4 +48,27 @@ export default class UserController {
         .json({ message: 'Erro ao criar usuario', error: error.message });
     }
   }
+
+  async update(req: Request, res: Response): Promise<void> {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const body = req.body;
+
+      if (body.id || body.status || body.created_at || body.updated_at) {
+        res
+          .status(400)
+          .json({
+            message: 'Não é permitido atualizar as informações fornecidas',
+          });
+        return;
+      }
+
+      const updatedAuthor = await UserService.update(id, body);
+      res.status(200).json(updatedAuthor);
+    } catch (error: any) {
+      res
+        .status(500)
+        .json({ message: 'Erro ao atualizar autor', error: error.message });
+    }
+  }
 }
