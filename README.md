@@ -65,7 +65,7 @@ Este é o meu projeto final para o **Módulo 2 do DEVinHouse [Clamed] V3**. Dese
 │   │   ├── RbacService.ts
 │   ├── util         # Utilitários gerais
 │   │   ├── SendEmail.ts
-│   │   ├── index.ts
+│   ├── index.ts
 ```
 
 ---
