@@ -3,11 +3,22 @@ import User from '../entities/User';
 import bcrypt from 'bcrypt';
 
 class UserService {
-  async getAll() {
-    return await AppDataSource.getRepository(User).find({
-      where: { status: true },
-      order: { id: 'ASC' },
-    });
+  async getAll(queryParam: string | null = null) {
+    const validProfiles = ['DRIVER', 'BRANCH', 'ADMIN'];
+    if (queryParam && validProfiles.includes(queryParam)) {
+      return await AppDataSource.getRepository(User).find({
+        where: {
+          status: true,
+          profile: queryParam as 'DRIVER' | 'BRANCH' | 'ADMIN',
+        },
+        order: { id: 'ASC' },
+      });
+    } else {
+      return await AppDataSource.getRepository(User).find({
+        where: { status: true },
+        order: { id: 'ASC' },
+      });
+    }
   }
 
   async getById(id: number) {

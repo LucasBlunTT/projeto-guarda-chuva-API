@@ -6,8 +6,16 @@ import User from '../entities/User';
 export default class UserController {
   async getAll(req: Request, res: Response): Promise<void> {
     try {
-      const users = await UserService.getAll();
-      res.status(200).json(users);
+      const queryParam = req.query.profile;
+      if (queryParam) {
+        const users = await UserService.getAll(queryParam as unknown as string);
+        res.status(200).json(users);
+        return;
+      } else {
+        const users = await UserService.getAll();
+        res.status(200).json(users);
+        return;
+      }
     } catch (error: any) {
       res
         .status(500)
