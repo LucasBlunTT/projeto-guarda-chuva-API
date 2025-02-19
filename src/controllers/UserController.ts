@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import UserService from '../services/UserService';
+import { AppDataSource } from '../database/data-source';
+import User from '../entities/User';
 
 export default class UserController {
   async getAll(req: Request, res: Response): Promise<void> {
@@ -55,11 +57,9 @@ export default class UserController {
       const body = req.body;
 
       if (body.id || body.status || body.created_at || body.updated_at) {
-        res
-          .status(400)
-          .json({
-            message: 'Não é permitido atualizar as informações fornecidas',
-          });
+        res.status(400).json({
+          message: 'Não é permitido atualizar as informações fornecidas',
+        });
         return;
       }
 
@@ -69,6 +69,18 @@ export default class UserController {
       res
         .status(500)
         .json({ message: 'Erro ao atualizar autor', error: error.message });
+    }
+  }
+
+  async disable(req: Request, res: Response): Promise<void> {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const updatedUser = await UserService.disable(id);
+      res.status(200).json(updatedUser);
+    } catch (error: any) {
+      res
+        .status(500)
+        .json({ message: 'Erro ao desativar usuario', error: error.message });
     }
   }
 }
