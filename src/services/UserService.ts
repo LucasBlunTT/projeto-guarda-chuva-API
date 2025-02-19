@@ -46,6 +46,19 @@ class UserService {
 
     return await userRepository.save(user);
   }
+
+  async disable(id: number) {
+    const userRepository = AppDataSource.getRepository(User);
+    const user = await userRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new Error('Usuario não encontrado');
+    }
+
+    user.status = !user.status;
+
+    return await userRepository.save(user);
+  }
 }
 
 export default new UserService();

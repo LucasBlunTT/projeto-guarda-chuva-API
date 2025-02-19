@@ -10,5 +10,7 @@ userRoutes.get('/', verifyAuthentication, verifyAdminOrDriver, userController.ge
 userRoutes.get('/:id', verifyAuthentication, verifyAdminOrDriver, userController.getById);
 userRoutes.post('/', verifyAuthentication, verifyAdminOrDriver, userController.create);
 userRoutes.put('/:id', verifyAuthentication, verifyAdminOrDriver, userController.update);
+userRoutes.patch('/:id', verifyAuthentication, verifyAdminOrDriver, userController.disable);
+
 
 export default userRoutes;
