@@ -22,7 +22,7 @@ export default function verifyAuthentication(
       process.env.JWT_SECRET
     ) as unknown as TokenPayload;
 
-    console.log(decoded);
+    req.userId = decoded.userId; // Adiciona o userId ao objeto req
 
     next();
   } catch (error) {
