@@ -7,6 +7,7 @@ export default class ProductController {
       const { name, amount, description, url_cover } = req.body;
       const userId = req.userId as number;
 
+      console.log(req.body);
       if (!name || !amount || !description) {
         res.status(400).json({ message: 'Campos obrigatórios faltando' });
         return;

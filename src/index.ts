@@ -6,6 +6,7 @@ import { AppDataSource } from './database/data-source';
 import logger from './config/winston';
 import userRoutes from './routes/user.routes';
 import authRoutes from './routes/auth.routes';
+import productRoutes from './routes/product.routes';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use('/users', userRoutes);
 app.use('/login', authRoutes);
+app.use('/products', productRoutes);
 
 AppDataSource.initialize()
   .then(async () => {

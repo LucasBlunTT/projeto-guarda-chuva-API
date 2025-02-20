@@ -3,14 +3,14 @@ import verifyAuthentication from '../middlewares/verifyAuthentication';
 import verifyAdminOrDriver from '../middlewares/verifyAdminOrDriver';
 import ProductController from '../controllers/ProductController';
 
-const router = Router();
+const productRoutes = Router();
 const productController = new ProductController();
 
-router.post(
-  '/products',
+productRoutes.post(
+  '/',
   verifyAuthentication,
   verifyAdminOrDriver,
   productController.create
 );
 
-export default router;
+export default productRoutes;
