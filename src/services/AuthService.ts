@@ -41,7 +41,12 @@ class AuthService {
       expiresIn: '1h',
     });
 
-    return { message: `BEM VINDO ${user.profile}!!`, token };
+    return {
+      message: 'Usuário autenticado com sucesso',
+      name: user.name,
+      profile: user.profile,
+      token,
+    };
   }
 }
 
