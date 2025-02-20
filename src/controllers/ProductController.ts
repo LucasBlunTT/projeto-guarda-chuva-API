@@ -25,4 +25,17 @@ export default class ProductController {
         .json({ message: 'Erro ao criar produto', error: error.message });
     }
   }
+
+  async getAll(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = req.userId as number;
+      const products = await ProductService.getAll(userId);
+
+      res.status(200).json(products);
+    } catch (error: any) {
+      res
+        .status(500)
+        .json({ message: 'Erro ao buscar produtos', error: error.message });
+    }
+  }
 }

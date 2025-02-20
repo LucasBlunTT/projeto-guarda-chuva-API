@@ -14,4 +14,11 @@ productRoutes.post(
   productController.create
 );
 
+productRoutes.get(
+  '/',
+  verifyAuthentication,
+  verifyBranch,
+  productController.getAll
+);
+
 export default productRoutes;
