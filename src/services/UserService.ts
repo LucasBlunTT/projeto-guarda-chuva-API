@@ -1,4 +1,6 @@
 import { AppDataSource } from '../database/data-source';
+import Branch from '../entities/Branch';
+import Driver from '../entities/Driver';
 import User from '../entities/User';
 import bcrypt from 'bcrypt';
 
@@ -28,7 +30,7 @@ class UserService {
   }
 
   async create(data: any) {
-    const { name, profile, email, password } = data;
+    const { name, profile, email, password, full_address, document } = data;
 
     const salt = bcrypt.genSaltSync(10);
     const senhaCriptografada = await bcrypt.hash(password, salt);
@@ -41,7 +43,23 @@ class UserService {
     user.created_at = new Date();
     user.updated_at = new Date();
 
-    return await AppDataSource.getRepository(User).save(user);
+    const userCreated = await AppDataSource.getRepository(User).save(user);
+
+    if (profile === 'DRIVER') {
+      const driver = new Driver();
+      driver.full_address = full_address;
+      driver.document = document;
+      driver.user_id = userCreated.id;
+      await AppDataSource.getRepository(Driver).save(driver);
+    } else if (profile === 'BRANCH') {
+      const branch = new Branch();
+      branch.full_address = full_address;
+      branch.document = document;
+      branch.user_id = userCreated.id;
+      await AppDataSource.getRepository(Branch).save(branch);
+    }
+
+    return userCreated;
   }
 
   async update(id: number, body: any) {

@@ -43,9 +43,17 @@ export default class UserController {
 
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const { name, profile, email, password } = req.body;
+      const { name, profile, email, password, full_address, document } =
+        req.body;
 
-      if (!name || !profile || !email || !password) {
+      if (
+        !name ||
+        !profile ||
+        !email ||
+        !password ||
+        !full_address ||
+        !document
+      ) {
         res.status(400).json({ message: 'Campos obrigatórios faltando' });
         return;
       }
