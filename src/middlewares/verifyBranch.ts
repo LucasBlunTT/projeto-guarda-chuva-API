@@ -1,15 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
-import { TokenPayload } from '../services/AuthService';
 import jwt from 'jsonwebtoken';
+import { TokenPayload } from '../services/AuthService';
 
-export default function verifyAdminOrDriver(
+export default function verifyBranch(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
     const token = req.headers.authorization?.split(' ')[1];
-    const userIdParam = parseInt(req.params.id, 10);
 
     if (!token) {
       return res.status(401).json({ message: 'Token não fornecido' });
@@ -23,10 +22,13 @@ export default function verifyAdminOrDriver(
 
     const decoded = jwt.verify(token, secret) as unknown as TokenPayload;
 
-    if (decoded.profile === 'ADMIN' || (decoded.profile === 'DRIVER' && decoded.userId === userIdParam)) {
+    if (decoded.profile === 'BRANCH') {
+      req.userId = decoded.userId; // Adiciona o userId ao objeto req
       next();
     } else {
-      return res.status(403).json({ message: 'Acesso negado, você não é ADMIN ou o MOTORISTA correspondente' });
+      return res
+        .status(403)
+        .json({ message: 'Acesso negado, você não é uma FILIAL' });
     }
   } catch (error) {
     return res.status(500).json({ message: 'Erro ao verificar token', error });
