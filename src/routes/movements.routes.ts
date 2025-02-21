@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import verifyAuthentication from '../middlewares/verifyAuthentication';
 import verifyBranch from '../middlewares/verifyBranch';
-import MovementController from '../controllers/movementController';
+import MovementController from '../controllers/MovementController';
 
 const movementRoutes = Router();
 const movementController = new MovementController();
@@ -20,4 +20,15 @@ movementRoutes.get(
   movementController.getAll
 );
 
+movementRoutes.patch(
+  '/:id/start',
+  verifyAuthentication,
+  movementController.updateStart
+);
+
+movementRoutes.patch(
+  '/:id/end',
+  verifyAuthentication,
+  movementController.updateEnd
+);
 export default movementRoutes;
