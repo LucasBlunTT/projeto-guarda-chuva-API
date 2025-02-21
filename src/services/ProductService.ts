@@ -1,5 +1,5 @@
 import { AppDataSource } from '../database/data-source';
-import { Product } from '../entities/Product';
+import Product from '../entities/Product';
 import Branch from '../entities/Branch';
 
 class ProductService {
