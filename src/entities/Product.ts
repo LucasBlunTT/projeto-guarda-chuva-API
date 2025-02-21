@@ -10,7 +10,7 @@ import {
 import Branch from './Branch';
 
 @Entity('products')
-export class Product {
+export default class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
