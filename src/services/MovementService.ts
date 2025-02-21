@@ -44,13 +44,14 @@ class MovementService {
     return await movementRepository.save(movement);
   }
 
-  // async getAll() {
-  //   const movementRepository = AppDataSource.getRepository(Movement);
+  async getAll(userId: number) {
+    const movementRepository = AppDataSource.getRepository(Movement);
 
-  //   return await movementRepository.find({
-  //     relations: ['destinationBranch', 'product'], // Inclui as relações com a filial e o produto
-  //   });
-  // }
+    return await movementRepository.find({
+      where: { destination_branch_id: userId },
+      relations: ['destinationBranch', 'product'], // Inclui as relações com a filial e o produto
+    });
+  }
 }
 
 export default new MovementService();
