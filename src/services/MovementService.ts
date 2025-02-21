@@ -44,10 +44,10 @@ class MovementService {
     return await movementRepository.save(movement);
   }
 
-  async getAll(userId: number) {
+  async getAll() {
     const movementRepository = AppDataSource.getRepository(Movement);
 
-    return await movementRepository.find({     
+    return await movementRepository.find({
       relations: ['branch', 'product'], // Inclui as relações com a filial e o produto
     });
   }

@@ -5,7 +5,6 @@ export default class MovementController {
   async create(req: Request, res: Response): Promise<void> {
     try {
       const { destination_branch_id, product_id, quantity } = req.body;
-      const userId = req.userId as number;
 
       if (!destination_branch_id || !product_id || !quantity) {
         res.status(400).json({ message: 'Campos obrigatórios faltando' });
@@ -28,8 +27,8 @@ export default class MovementController {
 
   async getAll(req: Request, res: Response): Promise<void> {
     try {
-      const userId = req.userId as number;
-      const movements = await MovementService.getAll(userId);
+   
+      const movements = await MovementService.getAll();
 
       res.status(200).json(movements);
     } catch (error: any) {
