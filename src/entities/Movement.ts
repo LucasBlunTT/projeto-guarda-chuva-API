@@ -15,15 +15,9 @@ export class Movement {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  destination_branch_id: number;
-
   @ManyToOne(() => Branch)
   @JoinColumn({ name: 'destination_branch_id' })
-  destinationBranch: Branch;
-
-  @Column()
-  product_id: number;
+  branch: Branch;
 
   @ManyToOne(() => Product)
   @JoinColumn({ name: 'product_id' })
