@@ -51,6 +51,48 @@ class MovementService {
       relations: ['branch', 'product'], // Inclui as relações com a filial e o produto
     });
   }
+
+  async updateStart(id: number) {
+    const movementRepository = AppDataSource.getRepository(Movement);
+
+    const movement = await movementRepository.findOne({
+      where: { id: id },
+      relations: ['product'],
+    });
+
+    if (!movement) {
+      throw new Error('Movimentação não encontrada');
+    }
+
+    if (movement.status == 'IN_PROGRESS') {
+      throw new Error('Movimentação já foi iniciada');
+    }
+
+    movement.status = 'IN_PROGRESS';
+
+    return await movementRepository.save(movement);
+  }
+
+  async updateEnd(id: number) {
+    const movementRepository = AppDataSource.getRepository(Movement);
+
+    const movement = await movementRepository.findOne({
+      where: { id: id },
+      relations: ['product'],
+    });
+
+    if (!movement) {
+      throw new Error('Movimentação não encontrada');
+    }
+
+    if (movement.status == 'FINISHED') {
+      throw new Error('Movimentação ja foi encerrada');
+    }
+
+    movement.status = 'FINISHED';
+
+    return await movementRepository.save(movement);
+  }
 }
 
 export default new MovementService();

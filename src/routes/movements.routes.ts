@@ -20,4 +20,15 @@ movementRoutes.get(
   movementController.getAll
 );
 
+movementRoutes.patch(
+  '/:id/start',
+  verifyAuthentication,
+  movementController.updateStart
+);
+
+movementRoutes.patch(
+  '/:id/end',
+  verifyAuthentication,
+  movementController.updateEnd
+);
 export default movementRoutes;

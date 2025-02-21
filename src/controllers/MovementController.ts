@@ -27,7 +27,6 @@ export default class MovementController {
 
   async getAll(req: Request, res: Response): Promise<void> {
     try {
-   
       const movements = await MovementService.getAll();
 
       res.status(200).json(movements);
@@ -35,6 +34,34 @@ export default class MovementController {
       res
         .status(500)
         .json({ message: 'Erro ao buscar movimentos', error: error.message });
+    }
+  }
+
+  async updateStart(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+
+      const movement = await MovementService.updateStart(Number(id));
+
+      res.status(200).json(movement);
+    } catch (error: any) {
+      res
+        .status(500)
+        .json({ message: 'Erro ao atualizar movimento', error: error.message });
+    }
+  }
+
+  async updateEnd(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+
+      const movement = await MovementService.updateEnd(Number(id));
+
+      res.status(200).json(movement);
+    } catch (error: any) {
+      res
+        .status(500)
+        .json({ message: 'Erro ao atualizar movimento', error: error.message });
     }
   }
 }
