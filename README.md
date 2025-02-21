@@ -7,7 +7,7 @@ Este é o meu projeto final para o **Módulo 2 do DEVinHouse [Clamed] V3**. Dese
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## 🛠 Tecnologias Utilizadasa
 - **Node.js**
 - **TypeScript**
 - **Express.js**
@@ -44,27 +44,40 @@ Este é o meu projeto final para o **Módulo 2 do DEVinHouse [Clamed] V3**. Dese
 │   │   ├── winston.ts # Configuração de logs
 │   ├── controllers    # Controladores das rotas
 │   │   ├── AuthController.ts
-│   │   ├── AuthorController.ts
-│   │   ├── RbacController.ts
+│   │   ├── MovementController.ts
+│   │   ├── ProductController.ts
+│   │   ├── UserController.ts
 │   ├── database       # Configuração do banco de dados e migrations
 │   │   ├── migrations
+│   │   │   ├── 1739911773763-CreateTableUsers.ts
+│   │   │   ├── 1740078759121-CreateTableBranches.ts
+│   │   │   ├── 1740078766058-CreateTableDrivers.ts
+│   │   │   ├── 1740086343920-CreateTableProducts.ts
+│   │   │   ├── 1740165198083-CreateTableMovements.ts
 │   │   ├── data-source.ts
 │   ├── entities       # Modelos de entidades TypeORM
-│   │   ├── Autor.ts
-│   │   ├── Permission.ts
-│   │   ├── Role.ts
+│   │   ├── Branch.ts
+│   │   ├── Driver.ts
+│   │   ├── Movement.ts
+│   │   ├── Product.ts
+│   │   ├── User.ts
 │   ├── middlewares    # Middleware de segurança e autenticação
-│   │   ├── authenticate.ts
+│   │   ├── verifyAdminOrDriver.ts
+│   │   ├── verifyAuthentication.ts
+│   │   ├── verifyBranch.ts
 │   ├── routes        # Definição das rotas do Express
 │   │   ├── auth.routes.ts
-│   │   ├── autor.routes.ts
-│   │   ├── rbac.routes.ts
+│   │   ├── movements.routes.ts
+│   │   ├── product.routes.ts
+│   │   ├── user.routes.ts
 │   ├── services      # Regras de negócio
-│   │   ├── AuthorService.ts
 │   │   ├── AuthService.ts
-│   │   ├── RbacService.ts
+│   │   ├── MovementService.ts
+│   │   ├── ProductService.ts
+│   │   ├── UserService.ts
 │   ├── util         # Utilitários gerais
 │   │   ├── SendEmail.ts
+│   ├── express.d.ts
 │   ├── index.ts
 ```
 
@@ -74,8 +87,8 @@ Este é o meu projeto final para o **Módulo 2 do DEVinHouse [Clamed] V3**. Dese
 
 ### 🔹 1. Clone o repositório
 ```sh
-git clone https://github.com/meu-usuario/meu-repositorio.git
-cd meu-repositorio
+git clone https://github.com/LucasBlunTT/projeto-guarda-chuva-API.git
+cd projeto-guarda-chuva-API
 ```
 
 ### 🔹 2. Instale as dependências
@@ -103,7 +116,7 @@ npm run typeorm migration:run
 ```sh
 npm run dev
 ```
-O servidor estará rodando em **http://localhost:3000** 🚀
+O servidor estará rodando em **http://localhost:3333** 🚀
 
 ---
 
