@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import verifyAuthentication from '../middlewares/verifyAuthentication';
 import ProductController from '../controllers/ProductController';
-import verifyBranch from '../middlewares/verifyBranch';
+import verifyBranch from '../middlewares/verifyBranchOrDriver';
 
 const productRoutes = Router();
 const productController = new ProductController();

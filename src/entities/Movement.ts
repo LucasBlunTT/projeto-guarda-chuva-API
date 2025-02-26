@@ -38,4 +38,7 @@ export class Movement {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Column({ nullable: true })
+  driver_id: number;
 }

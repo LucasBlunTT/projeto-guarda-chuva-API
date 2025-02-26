@@ -40,8 +40,12 @@ export default class MovementController {
   async updateStart(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
+      const userId = req.userId;
 
-      const movement = await MovementService.updateStart(Number(id));
+      const movement = await MovementService.updateStart(
+        Number(id),
+        Number(userId)
+      );
 
       res.status(200).json(movement);
     } catch (error: any) {
@@ -54,8 +58,12 @@ export default class MovementController {
   async updateEnd(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
+      const userId = req.userId;
 
-      const movement = await MovementService.updateEnd(Number(id));
+      const movement = await MovementService.updateEnd(
+        Number(id),
+        Number(userId)
+      );
 
       res.status(200).json(movement);
     } catch (error: any) {
