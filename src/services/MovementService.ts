@@ -2,6 +2,7 @@ import { AppDataSource } from '../database/data-source';
 import { Movement } from '../entities/Movement';
 import Product from '../entities/Product';
 import Branch from '../entities/Branch';
+import User from '../entities/User';
 
 class MovementService {
   async create(data: any) {
@@ -61,12 +62,13 @@ class MovementService {
     const movementRepository = AppDataSource.getRepository(Movement);
 
     return await movementRepository.find({
-      relations: ['branch', 'product'], // Inclui as relações com a filial e o produto
+      relations: ['branch', 'product', 'driver'], // Inclui as relações com a filial, produto e motorista
     });
   }
 
   async updateStart(id: number, userId: number) {
     const movementRepository = AppDataSource.getRepository(Movement);
+    const userRepository = AppDataSource.getRepository(User);
 
     const movement = await movementRepository.findOne({
       where: { id: id },
@@ -85,8 +87,14 @@ class MovementService {
       throw new Error('Movimentação já foi encerrada');
     }
 
+    const driver = await userRepository.findOne({ where: { id: userId } });
+
+    if (!driver) {
+      throw new Error('Motorista não encontrado');
+    }
+
     movement.status = 'IN_PROGRESS';
-    movement.driver_id = userId;
+    movement.driver = driver;
 
     return await movementRepository.save(movement);
   }
@@ -96,7 +104,7 @@ class MovementService {
 
     const movement = await movementRepository.findOne({
       where: { id: id },
-      relations: ['product'],
+      relations: ['product', 'driver'],
     });
 
     if (!movement) {
@@ -107,7 +115,7 @@ class MovementService {
       throw new Error('Movimentação ja foi encerrada');
     }
 
-    if (userId !== movement.driver_id) {
+    if (userId !== movement.driver.id) {
       throw new Error('Motorista não autorizado para encerrar a movimentação');
     }
 

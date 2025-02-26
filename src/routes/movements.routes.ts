@@ -24,7 +24,6 @@ movementRoutes.get(
 movementRoutes.patch(
   '/:id/start',
   verifyAuthentication,
-  verifyDriver,
   movementController.updateStart
 );
 

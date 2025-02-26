@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import Branch from './Branch';
 import Product from './Product';
+import User from './User';
 
 @Entity('movements')
 export class Movement {
@@ -39,6 +40,7 @@ export class Movement {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @Column({ nullable: true })
-  driver_id: number;
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'driver_id' })
+  driver: User;
 }
