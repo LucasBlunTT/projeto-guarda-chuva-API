@@ -81,6 +81,10 @@ class MovementService {
       throw new Error('Movimentação já foi iniciada');
     }
 
+    if (movement.status == 'FINISHED') {
+      throw new Error('Movimentação já foi encerrada');
+    }
+
     movement.status = 'IN_PROGRESS';
     movement.driver_id = userId;
 
