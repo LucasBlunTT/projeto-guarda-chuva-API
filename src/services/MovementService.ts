@@ -1,11 +1,13 @@
 import { AppDataSource } from '../database/data-source';
 import { Movement } from '../entities/Movement';
 import Product from '../entities/Product';
+import Branch from '../entities/Branch';
 
 class MovementService {
   async create(data: any) {
     const movementRepository = AppDataSource.getRepository(Movement);
     const productRepository = AppDataSource.getRepository(Product);
+    const branchRepository = AppDataSource.getRepository(Branch);
 
     const { destination_branch_id, product_id, quantity } = data;
 
@@ -35,10 +37,21 @@ class MovementService {
     product.amount -= quantity;
     await productRepository.save(product);
 
+    // Obter a filial de destino
+    const branch = await branchRepository.findOne({
+      where: { id: destination_branch_id },
+    });
+
+    if (!branch) {
+      throw new Error('Filial de destino não encontrada');
+    }
+
     // Criar a nova movimentação com status 'PENDING'
     const movement = movementRepository.create({
       ...data,
       status: 'PENDING',
+      branch: branch,
+      product: product,
     });
 
     return await movementRepository.save(movement);
@@ -52,7 +65,7 @@ class MovementService {
     });
   }
 
-  async updateStart(id: number) {
+  async updateStart(id: number, userId: number) {
     const movementRepository = AppDataSource.getRepository(Movement);
 
     const movement = await movementRepository.findOne({
@@ -69,11 +82,12 @@ class MovementService {
     }
 
     movement.status = 'IN_PROGRESS';
+    movement.driver_id = userId;
 
     return await movementRepository.save(movement);
   }
 
-  async updateEnd(id: number) {
+  async updateEnd(id: number, userId: number) {
     const movementRepository = AppDataSource.getRepository(Movement);
 
     const movement = await movementRepository.findOne({
@@ -87,6 +101,10 @@ class MovementService {
 
     if (movement.status == 'FINISHED') {
       throw new Error('Movimentação ja foi encerrada');
+    }
+
+    if (userId !== movement.driver_id) {
+      throw new Error('Motorista não autorizado para encerrar a movimentação');
     }
 
     movement.status = 'FINISHED';
