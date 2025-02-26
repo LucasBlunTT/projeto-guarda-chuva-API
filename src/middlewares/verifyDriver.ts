@@ -37,13 +37,14 @@ export default async function verifyDriver(
     const movementRepository = AppDataSource.getRepository(Movement);
     const movement = await movementRepository.findOne({
       where: { id: movementId },
+      relations: ['driver'], // Adiciona a relação com o motorista
     });
 
     if (!movement) {
       return res.status(404).json({ message: 'Movimentação não encontrada' });
     }
 
-    if (movement.driver_id !== decoded.userId) {
+    if (movement.driver?.id !== decoded.userId) {
       return res.status(403).json({
         message:
           'Acesso negado, você não é o MOTORISTA que iniciou esta movimentação',
