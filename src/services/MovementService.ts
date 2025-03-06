@@ -116,7 +116,7 @@ class MovementService {
     }
 
     if (userId !== movement.driver.id) {
-      throw new Error('Motorista não autorizado para encerrar a movimentação');
+      throw new Error('Motorista não autorizado para encerrar a movimentação, pois não é o mesmo que iniciou');
     }
 
     movement.status = 'FINISHED';
