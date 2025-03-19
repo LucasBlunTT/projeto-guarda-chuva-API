@@ -144,26 +144,6 @@ O servidor estará rodando em **http://localhost:3333** 🚀
 
 ---
 
-## 🎥 Gravação de Vídeo
-
-Para finalizar a entrega, gravei um **vídeo de até 5 minutos** abordando:
-1. Objetivo do sistema e demonstração de funcionamento.
-2. Como executar o projeto.
-3. Como organizei as tarefas no Trello.
-4. Estrutura de branches e commits no GitHub.
-5. Pontos de melhoria que poderiam ser implementados.
-
-🔗 **O vídeo foi enviado no Google Drive e compartilhado no AVA.**
-
----
-
-## 📅 Prazo Final de Entrega
-📌 **Data de entrega: 03/03/2025 até às 22h**
-📌 O projeto foi enviado no GitHub, e os links compartilhados no AVA.
-📌 Não alterei o código após a entrega para evitar impacto na avaliação.
-
----
-
 ## 🚀 Melhorias Futuras
 - Implementar testes automatizados com Jest.
 - Criar um sistema de logs para auditoria.
